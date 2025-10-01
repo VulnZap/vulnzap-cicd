@@ -43,5 +43,5 @@ Add your VulnZap API Key as a secret in your repository:
 
 1. Go to your repository's Settings → Secrets and variables → Actions
 2. Click New repository secret
-3. Name it `VULNZAP_CICD_API_KEY`
+3. Name it `VULNZAP_API_KEY`
 4. Paste your API key value and save
