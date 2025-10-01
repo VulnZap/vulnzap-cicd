@@ -1,0 +1,26 @@
+name: 'VulnZap Scan'
+description: 'Runs a VulnZap scan using the VulnZap CLI.'
+branding:
+  color: 'blue'
+  icon: 'shield'
+inputs:
+  api-key:
+    description: 'Your VulnZap API Key.'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - id: run-vulnzap-cli
+      shell: bash
+      run: |
+        set -euo pipefail
+        echo "Installing and running VulnZap CLI..."
+
+        # Build repo URL in required format for CLI: https://github.com/owner/repo
+        REPO_URL="https://github.com/${GITHUB_REPOSITORY}"
+
+        # Pass URL positionally and provide API key
+        ARGS=(scan "$REPO_URL" --wait --key "${{ inputs.api-key }}")
+
+        # Run the CLI via npx so logs stream directly in the job output
+        npx --yes vulnzap@latest "${ARGS[@]}"
